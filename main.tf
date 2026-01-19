@@ -54,11 +54,11 @@ resource "azuread_application" "backend_dev" {
   display_name     = "backend-dev"
   sign_in_audience = "AzureADMyOrg"
   owners           = [data.azuread_client_config.current.object_id]
-  identifier_uris = ["api://localhost"]
+  identifier_uris = ["api://localhost:9275"]
 
   single_page_application {
     redirect_uris = [
-      "https://localhost/api/microsoft-oauth/callback/",
+      "https://localhost:9275/api/microsoft-oauth/callback/",
       "https://localhost:8000/api/microsoft-oauth/callback/",
       "http://localhost:8000/api/microsoft-oauth/callback/",
     ]
