@@ -12,7 +12,7 @@ resource "azurerm_resource_group" "rg" {
 data "azuread_client_config" "current" {}
 
 
-resource "azuread_application" "backend_prod" { # rename to local and cloud
+resource "azuread_application" "backend_prod" {
   display_name     = "backend-prod"
   sign_in_audience = "AzureADMyOrg"
   owners           = [data.azuread_client_config.current.object_id]
@@ -39,18 +39,10 @@ resource "azuread_application" "backend_prod" { # rename to local and cloud
       user_consent_description    = "Allows delegated access to backend API"
     }
   }
-
-  required_resource_access {
-    resource_app_id = var.microsoft_graph_id
-    resource_access {
-      id   = var.user_read_scope_id
-      type = "Scope"
-    }
-  }
 }
 
 
-resource "azuread_application" "backend_dev" {
+resource "azuread_application" "backend_dev" { # rename to local
   display_name     = "backend-dev"
   sign_in_audience = "AzureADMyOrg"
   owners           = [data.azuread_client_config.current.object_id]
@@ -76,14 +68,6 @@ resource "azuread_application" "backend_dev" {
       admin_consent_description  = "Allows delegated access to backend API"
       user_consent_display_name   = "Access backend API"
       user_consent_description    = "Allows delegated access to backend API"
-    }
-  }
-
-  required_resource_access {
-    resource_app_id = var.microsoft_graph_id
-    resource_access {
-      id   = var.user_read_scope_id
-      type = "Scope"
     }
   }
 }
